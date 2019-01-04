@@ -54,16 +54,22 @@ RUN mkdir -p /opt/opencv-${OPENCV_VERSION}/build && \
 
  RUN cd /usr/python && \
 	python setup.py develop && \
-	mkdir /yolo
+	mkdir /yolo && \
+	rm -rf /opt/opencv-${OPENCV_VERSION}/ && \
+	pip3 install flask 
 
 COPY yolov3.cfg /yolo/	
 COPY yolov3.txt /yolo/	
 COPY yolov3.weights /yolo/	
-COPY image.jpg /yolo/	
-COPY detect.py /
+COPY app.py /yolo
+COPY startup.sh /
 
 RUN apk del --purge \ 
 	python3-dev libjpeg-turbo-dev libpng-dev jasper-dev tiff-dev libwebp-dev clang-dev linux-headers build-base openblas-dev unzip wget cmake
 
 RUN apk add --update --no-cache \
 	libpng libwebp tiff jasper libstdc++
+
+EXPOSE 5000
+
+ENTRYPOINT ["/startup.sh"]
