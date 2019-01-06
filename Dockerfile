@@ -58,17 +58,25 @@ RUN mkdir -p /opt/opencv-${OPENCV_VERSION}/build && \
 	rm -rf /opt/opencv-${OPENCV_VERSION}/ && \
 	pip3 install flask 
 
-COPY yolov3.cfg /yolo/	
-COPY yolov3.txt /yolo/	
-COPY yolov3.weights /yolo/	
-COPY app.py /yolo
-COPY startup.sh /
-
 RUN apk del --purge \ 
 	python3-dev libjpeg-turbo-dev libpng-dev jasper-dev tiff-dev libwebp-dev clang-dev linux-headers build-base openblas-dev unzip wget cmake
 
 RUN apk add --update --no-cache \
 	libpng libwebp tiff jasper libstdc++
+
+COPY yolov3.cfg /yolo/	
+COPY yolov3.txt /yolo/	
+COPY yolov3.weights.1 /yolo/
+COPY yolov3.weights.2 /yolo/
+COPY yolov3.weights.3 /yolo/
+COPY app.py /yolo/
+COPY startup.sh /
+
+RUN cd /yolo/ && \
+	cat yolov3.weights.1 >> yolov3.weights && \
+	cat yolov3.weights.2 >> yolov3.weights && \
+	cat yolov3.weights.3 >> yolov3.weights && \
+	rm yolov3.weights.1 yolov3.weights.2 yolov3.weights.3
 
 EXPOSE 5000
 

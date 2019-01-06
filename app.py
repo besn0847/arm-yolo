@@ -5,9 +5,9 @@ from flask import Flask, render_template, request
                                             
 app = Flask(__name__)                       
                                             
-INPUT_MODEL_WEIGHTS = "/yolo/yolov3.weights"
-INPUT_MODEL_CONFIG = "/yolo/yolov3.cfg" 
-INPUT_MODEL_CLASSES = "/yolo/yolov3.txt"      
+INPUT_MODEL_WEIGHTS = "/conf/yolov3.weights"
+INPUT_MODEL_CONFIG = "/conf/yolov3.cfg" 
+INPUT_MODEL_CLASSES = "/conf/yolov3.txt"      
                                                                 
 scale = 0.00392
 classes = None 

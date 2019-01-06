@@ -1,10 +1,14 @@
 # arm-yolo
-**WORK IN PROGRESS** 
 A microservice for Raspberry PI running a Yolo neural network to detect object in pictures 
 
 To start the container with default config :
 ```bash
 docker run -d --name yolo -p 5000:5000 x86-yolo
+```
+
+Alternatively you can specify a conf diretory so you can change model weights easily :
+```bash
+docker run -d --name yolo -v <conf_dir>:/conf -p 5000:5000 x86-yolo
 ```
 
 To test an image with the Yolo WebService : 
